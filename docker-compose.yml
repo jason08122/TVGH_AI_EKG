@@ -1,0 +1,19 @@
+version: '3.1'
+services:
+  fastapi:
+    image: tvgh-ai-ekg:v1.2.12
+    container_name: tvgh-ai-ekg-deploy
+    ports:
+      - '8000:8000'
+    volumes:
+      - .data/home:/home
+    restart: always
+
+  web:
+    image: nginx:1.20
+    container_name: web-server-deploy
+    ports:
+      - '32080:80'
+    volumes:
+      - './TVGH_AI_EKG_WEB:/usr/share/nginx/html'
+    restart: always
