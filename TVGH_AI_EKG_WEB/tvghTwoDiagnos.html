@@ -260,7 +260,7 @@
             const formData = new FormData();
             formData.append('file', fileInput);
 
-            fetch('http://140.113.213.56:8000/twoDiagnos/upload', {
+            fetch('http://10.97.242.20:8000/twoDiagnos/upload', {
                 method: 'POST',
                 body: formData
             })
@@ -386,7 +386,7 @@
             console.log(doctor_diago);
 
             // call api to submit
-            const url = `http://140.113.213.56:8000/twoDiagnos/doctor/label?id=${patient_id}&date=${ekg_date}&diagnosis=${doctor_diago}`;
+            const url = `http://10.97.242.20:8000/twoDiagnos/doctor/label?id=${patient_id}&date=${ekg_date}&diagnosis=${doctor_diago}`;
 
             try {
                 const response = await fetch(url);
