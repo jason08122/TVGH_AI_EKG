@@ -66,9 +66,18 @@
         </symbol>
     </svg>
 
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1">TVGH AI EKG</span>
+          <a class="navbar-brand" href="http://140.113.213.56:32080/PatientsInfo.html">TVGH AI EKG</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" aria-current="page" href="http://140.113.213.56:32080/PatientsInfo.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="http://140.113.213.56:32080/tvghTwoDiagnos.html">Drag XML</a>
+            </div>
+          </div>
         </div>
     </nav>
 
@@ -123,7 +132,7 @@
                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
                     During the diagnostic process, an AI model can ascertain the presence of heart failure in a patient, 
-                    and distinguish between systolic dysfunction and diastolic dysfunction.
+                    and distinguish between <strong>systolic dysfunction</strong> and <strong>diastolic dysfunction</strong>.
                   </div>
                 </div>
             </div>
@@ -135,7 +144,7 @@
               </h2>
               <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    Same as SDDD Diagnosis, but focus on distunguish normal patient with patient with systolic dysfunction.
+                    Same as SDDD Diagnosis, but focus on distunguish normal patient with patient with <strong>systolic dysfunction</strong>.
                 </div>
               </div>
             </div>
@@ -162,7 +171,7 @@
                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
                     <p>HFpEF(射血率正常的心臟衰竭): heart failure with preserved ejection fraction.</p>
-                    <p><strong>判斷條件 :</strong> 以下條件滿足三項以上</p>
+                    <p><strong>判斷條件 :</strong> LVEF>50% 且以下條件滿足三項以上</p>
                     <ul id="ddCondition">
                         <li><strong>LAE_40: </strong>左心室直徑>=40mm</li>
                         <li><strong>PH_above_35: </strong>右心室收縮壓>=35mmHg</li>
@@ -178,7 +187,7 @@
             <h1><strong>Doctor's diagnosis</strong></h1>
             
             <form>
-                <select id="browserInputHForNormal" name="browserInputHForNormal" onclick="diableHelper()">
+                <select id="browserInputHForNormal" name="browserInputHForNormal" onclick="disableHelper()">
                     <option value="Normal">Normal</option>
                     <option value="Heart Failure">Heart Failure</option>
                 </select>
@@ -260,7 +269,7 @@
             const formData = new FormData();
             formData.append('file', fileInput);
 
-            fetch('http://10.97.242.20:8000/twoDiagnos/upload', {
+            fetch('http://140.113.213.56:8000/twoDiagnos/upload', {
                 method: 'POST',
                 body: formData
             })
@@ -305,7 +314,7 @@
             document.getElementById('sdDiagnosis').children[1].textContent = 'Normal: ' + sd_normal_probability;            
         }
         
-        function diableHelper() {
+        function disableHelper() {
             var doctor_diago_1 = document.getElementById('browserInputHForNormal').value;
 
             if (doctor_diago_1 == 'Heart Failure')
@@ -386,7 +395,7 @@
             console.log(doctor_diago);
 
             // call api to submit
-            const url = `http://10.97.242.20:8000/twoDiagnos/doctor/label?id=${patient_id}&date=${ekg_date}&diagnosis=${doctor_diago}`;
+            const url = `http://140.113.213.56:8000/twoDiagnos/doctor/label?id=${patient_id}&date=${ekg_date}&diagnosis=${doctor_diago}`;
 
             try {
                 const response = await fetch(url);
