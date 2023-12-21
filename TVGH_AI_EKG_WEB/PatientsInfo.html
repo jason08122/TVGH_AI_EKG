@@ -82,14 +82,14 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="http://140.113.213.56:32080/PatientsInfo.html">TVGH AI EKG</a>
+          <a class="navbar-brand" href="http://140.113.213.56:32080/PatientsInfo2.html">TVGH AI EKG</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="http://140.113.213.56:32080/PatientsInfo.html">Home</a>
-              <a class="nav-link" href="http://140.113.213.56:32080/tvghTwoDiagnos.html">Drag XML</a>
+              <a class="nav-link active" aria-current="page" href="http://140.113.213.56:32080/PatientsInfo2.html">Home</a>
+              <a class="nav-link" href="http://140.113.213.56:32080/tvghTwoDiagnos2.html">Drag XML</a>
             </div>
           </div>
           <form class="d-flex">
@@ -119,15 +119,10 @@
                     <br>
                     <h2 id="ekgDate">EKG Date: </h2>
                     <br>
-                    <h2 id="Diagnosis_1">SDDD Diagnosis:</h2>
-                    <ul id="sdddDiagnosis">
+                    <h2 id="model_pred">Model Prediction: </h2>
+                    <ul id="model_prob">
                         <li>HFrEF: </li>
                         <li>HFpEF: </li>
-                        <li>Normal: </li>
-                    </ul>
-                    <h2 id="Diagnosis_2">SD Diagnosis:</h2>
-                    <ul id="sdDiagnosis">
-                        <li>HFrEF: </li>
                         <li>Normal: </li>
                     </ul>
                 </div>            
@@ -148,28 +143,16 @@
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            <strong>SDDD Diagnosis</strong>
-                        </button>
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                              <strong>Model Prediction</strong>
+                          </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            During the diagnostic process, an AI model can ascertain the presence of heart failure in a patient, 
+                          <div class="accordion-body">
+                            During the process, an AI model can ascertain the presence of heart failure in a patient, 
                             and distinguish between <strong>systolic dysfunction</strong> and <strong>diastolic dysfunction</strong>.
+                          </div>
                         </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <strong>SD Diagnosis</strong>
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            Same as SDDD Diagnosis, but focus on distunguish normal patient with patient with <strong>systolic dysfunction</strong>.
-                        </div>
-                    </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
@@ -325,28 +308,28 @@
         var g_pid = '5147137';
         var g_date = '';
 
+        // "2014-11-19": {
+        //     "model_pred": "HFrEF",
+        //     "prob_sd": 0.51,
+        //     "prob_dd": 0,
+        //     "prob_normal": 0.48
+        // },
+
         function displayJsonAsHtml(jsonData) {
             console.log('displayJsonAsHtml');
             var lessThanZero = 'Less than 0.01'
             document.getElementById('patientId').textContent = 'Patient ID: ' + g_pid;
             document.getElementById('ekgDate').textContent = 'EKG Date: ' + g_date;
-            document.getElementById('Diagnosis_1').textContent = 'SDDD Diagnosis: ' + jsonData.sddd_model_pred;
-            var sddd_sd_probability = jsonData.sddd_model_prob_sd.toString();
-            var sddd_dd_probability = jsonData.sddd_model_prob_dd.toString();
-            var sddd_normal_probability = jsonData.sddd_model_prob_others.toString();
-            var sd_sd_probability = jsonData.sd_model_prob_sd.toString();
-            var sd_normal_probability = jsonData.sd_model_prob_others.toString();
-            if (sddd_sd_probability == '0') sddd_sd_probability = lessThanZero;
-            if (sddd_dd_probability == '0') sddd_dd_probability = lessThanZero;
-            if (sddd_normal_probability == '0') sddd_normal_probability = lessThanZero;
-            if (sd_sd_probability == '0') sd_sd_probability = lessThanZero;
-            if (sd_normal_probability == '0') sd_normal_probability = lessThanZero;
-            document.getElementById('sdddDiagnosis').children[0].textContent = 'HFrEF: ' + sddd_sd_probability;
-            document.getElementById('sdddDiagnosis').children[1].textContent = 'HFpEF: ' + sddd_dd_probability;
-            document.getElementById('sdddDiagnosis').children[2].textContent = 'Normal: ' + sddd_normal_probability;
-            document.getElementById('Diagnosis_2').textContent = 'SD Diagnosis: ' + jsonData.sd_model_pred;
-            document.getElementById('sdDiagnosis').children[0].textContent = 'HFrEF: ' + sd_sd_probability;
-            document.getElementById('sdDiagnosis').children[1].textContent = 'Normal: ' + sd_normal_probability;            
+            document.getElementById('model_pred').textContent = 'Model Prediction: ' + jsonData.model_pred;
+            var sd_prob = jsonData.prob_sd.toString();
+            var dd_prob = jsonData.prob_dd.toString();
+            var normal_prob = jsonData.prob_normal.toString();
+            if (sd_prob == '0') sd_prob = lessThanZero;
+            if (dd_prob == '0') dd_prob = lessThanZero;
+            if (normal_prob == '0') normal_prob = lessThanZero;
+            document.getElementById('model_prob').children[0].textContent = 'HFrEF: ' + sd_prob;
+            document.getElementById('model_prob').children[1].textContent = 'HFpEF: ' + dd_prob;
+            document.getElementById('model_prob').children[2].textContent = 'Normal: ' + normal_prob;        
         }
         
         function addNewDate(date) {
@@ -519,7 +502,7 @@
         }
 
         function initial_date(pid) {
-            const url = `http://140.113.213.56:8000/twoDiagnos/patient/model/preds?pid=${pid}`;
+            const url = `http://140.113.213.56:8000/oneDiagnos/patient/model/preds?pid=${pid}`;
             
             fetch(url)
             .then(response => response.json())
