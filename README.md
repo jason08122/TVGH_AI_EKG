@@ -63,4 +63,4 @@ $ sudo docker-compose up -d
 
 ### 開啟網頁
 
-    - http://localhost:6060/tvghTwoDiagnos.html
+    - http://10.97.242.20:6060/tvghTwoDiagnos.html
