@@ -3,9 +3,9 @@
 ### Remove old repository
 
 ```typescript
-docker-compose down
+sudo docker-compose down
 
-rm -rf TVGH_AI_EKG
+sudo rm -rf TVGH_AI_EKG
 
 git clone https://github.com/jason08122/TVGH_AI_EKG.git
 ```
@@ -15,11 +15,11 @@ git clone https://github.com/jason08122/TVGH_AI_EKG.git
 ```typescript
 cd TVGH_AI_EKG/TVGH_AI_EKG
 
-docker build -t "tvgh-ai-ekg:v1.3.3" .
+sudo docker build -t "tvgh-ai-ekg:v1.3.3" .
 
 cd ..
 
-docker-compose up -d
+sudo docker-compose up -d
 ```
 
 ### 開啟網頁
