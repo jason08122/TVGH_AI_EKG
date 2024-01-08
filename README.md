@@ -5,6 +5,8 @@
 ```typescript
 sudo docker-compose down
 
+cd ..
+
 sudo rm -rf TVGH_AI_EKG
 
 git clone https://github.com/jason08122/TVGH_AI_EKG.git
