@@ -1,30 +1,36 @@
 # Service update
 
-### Remove old repository
+- ### 移動到 ./TVGH_AI_EKG 
 
-```typescript
-sudo docker-compose down
+    ```typesrcipt
+    cd ~/TVGH_AI_EKG
+    ```
 
-cd ..
+- ### Remove old repository
 
-sudo rm -rf TVGH_AI_EKG
+    ```typescript
+    sudo docker-compose down
 
-git clone https://github.com/jason08122/TVGH_AI_EKG.git
-```
+    cd ..
 
-### Building new service into docker image
+    sudo rm -rf TVGH_AI_EKG
 
-```typescript
-cd TVGH_AI_EKG/TVGH_AI_EKG
+    git clone https://github.com/jason08122/TVGH_AI_EKG.git
+    ```
 
-sudo docker build -t "tvgh-ai-ekg:v1.3.3" .
+- ### Building new service into docker image
 
-cd ..
+    ```typescript
+    cd TVGH_AI_EKG/TVGH_AI_EKG
 
-sudo docker-compose up -d
-```
+    sudo docker build -t "tvgh-ai-ekg:v1.3.3" .
 
-### 開啟網頁
+    cd ..
+
+    sudo docker-compose up -d
+    ```
+
+- ### 開啟網頁 （在VM以外的電腦）
     - http://10.97.242.20:32080/PatientsInfo.html
 
 ---
