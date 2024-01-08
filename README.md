@@ -1,3 +1,33 @@
+# Service update
+
+### Remove old repository
+
+```typescript
+docker-compose down
+
+rm -rf TVGH_AI_EKG
+
+git clone https://github.com/jason08122/TVGH_AI_EKG.git
+```
+
+### Building new service into docker image
+
+```typescript
+cd TVGH_AI_EKG/TVGH_AI_EKG
+
+docker build -t "tvgh-ai-ekg:v1.3.3" .
+
+cd ..
+
+docker-compose up -d
+```
+
+### 開啟網頁
+    - http://10.97.242.20:6060/PatientsInfo.html
+
+---
+<br>
+
 # Installation guide
 
 ### 安裝 Git
@@ -52,15 +82,3 @@ $ sudo apt install docker-compose
 $ sudo docker-compose up -d
 ```
 
-### 處理 Port Forwarding
-
- - Setting->Network->Advanced->Port Forwarding->Add
- 
-    | Name | Protocol | Host IP | Host Port | Guest IP     | Guest Port |
-    | ---- | -------- | ------- |    ---    |    ---       |    ---     |
-    | Http | TCP      | 127.0.01|  6060     |  10.0.2.15   |  32080     |
-
-
-### 開啟網頁
-
-    - http://10.97.242.20:6060/tvghTwoDiagnos.html
