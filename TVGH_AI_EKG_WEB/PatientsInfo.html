@@ -26,7 +26,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: 25% 50% 25%;
+            grid-template-columns: 30% 30% 40%;
             column-gap: 30px;
         }
         .icon {
@@ -42,7 +42,7 @@
             font-size: 30px; /* Adjust the font size as needed */
         }
         .alert {
-            width:60%; 
+            width:100%; 
         }
         .center-alert {
             margin: 0 auto; /* Set left and right margins to 'auto' */
@@ -56,6 +56,13 @@
             align-items: center;
             justify-content: center;
             height: 600px;
+        }
+        .tab-content {
+            margin-left: 20px; /* Set the left margin to 20 pixels */
+        }
+        mark {
+            background-color: yellow;
+            color: black;
         }
     </style>
 </head>
@@ -74,22 +81,16 @@
         </symbol>
     </svg>
 
-    <!-- <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1">TVGH AI EKG</span>
-        </div>
-    </nav> -->
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="http://140.113.213.56:32080/PatientsInfo2.html">TVGH AI EKG</a>
+          <a class="navbar-brand" id="navbar_TVGH_AI_EKG" href="http://140.113.213.56:32080/PatientsInfo.html">TVGH AI EKG</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="http://140.113.213.56:32080/PatientsInfo2.html">Home</a>
-              <a class="nav-link" href="http://140.113.213.56:32080/tvghTwoDiagnos2.html">Drag XML</a>
+              <a class="nav-link active" aria-current="page" id="navbar_Home" href="http://140.113.213.56:32080/PatientsInfo.html">Home</a>
+              <a class="nav-link" id="navbar_Drag" href="http://140.113.213.56:32080/tvghTwoDiagnos.html">Drag XML</a>
             </div>
           </div>
           <form class="d-flex">
@@ -113,13 +114,15 @@
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="grid-container">
                 
-                <div>
+                <div id="gridOne">
                     <br>
                     <h2 id="patientId">Patient ID: </h2>
                     <br>
                     <h2 id="ekgDate">EKG Date: </h2>
                     <br>
                     <h2 id="model_pred">Model Prediction: </h2>
+                    <br>
+                    <h5><strong>以下為各病症的機率:</strong></h5>
                     <ul id="model_prob">
                         <li>HFrEF: </li>
                         <li>HFpEF: </li>
@@ -128,74 +131,72 @@
                 </div>            
                 
                 <div>
-                              
+                    <br>
+                    <br>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                  <strong>Model Prediction</strong>
+                              </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                During the process, an AI model can ascertain the presence of heart failure in a patient, 
+                                and distinguish between <strong>HFrEF</strong> and <strong>HFpEF</strong>.
+                              </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <strong>HFrEF</strong>
+                            </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <p><strong>HFrEF(射血率降低的心臟衰竭):</strong> Heart failure with reduced ejection fraction.</p>
+                                <p><strong>判斷條件 :</strong> LVEF<=40%</p>
+                            </div>
+                            </div>
+                        </div>
+    
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                    <strong>HFpEF</strong>
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p><strong>HFpEF(射血率正常的心臟衰竭):</strong> Heart failure with preserved ejection fraction.</p>
+                                    <p><strong>判斷條件 :</strong> LVEF>50% 且以下條件滿足<mark><strong>三項</strong></mark>以上</p>
+                                    <ul id="ddCondition">
+                                        <li><strong>LAE_40: </strong>LAD >= 40mm</li>
+                                        <li><strong>PH_above_35: </strong>RVSP >= 35mmHg</li>
+                                        <li><strong>MedEa_below_7: </strong>MedEa <=7cm/s</li>
+                                        <li><strong>high_LVEDP: </strong> MV_E 除以 MedEa >= 15</li>
+                                    </ul>
+                                    <div class="alert alert-success d-flex " role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                                        <hr>
+                                        <ul style="list-style-type:square">
+                                            <li><strong>LAD:</strong> 左心房直徑</li>
+                                            <li><strong>RVSP:</strong> 右心室收縮壓</li>
+                                            <li><strong>MedEa:</strong> 二尖瓣環內側舒張期組織移動速度</li>
+                                            <li><strong>MV_E:</strong> 舒張早期二尖瓣血流速度</li>    
+                                        </ul>                          
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
                 </div>
                 
                 <div>
                   
                 </div>
                 
-            </div>
-
-            <br>
-
-            <div class="grid-container">
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                              <strong>Model Prediction</strong>
-                          </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            During the process, an AI model can ascertain the presence of heart failure in a patient, 
-                            and distinguish between <strong>systolic dysfunction</strong> and <strong>diastolic dysfunction</strong>.
-                          </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <strong>HFrEF</strong>
-                        </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <p>HFrEF(射血率降低的心臟衰竭): heart failure with reduced ejection fraction.</p>
-                            <p><strong>判斷條件 :</strong> LVEF<=40%</p>
-                        </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFour">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            <strong>HFpEF</strong>
-                        </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <p>HFpEF(射血率正常的心臟衰竭): heart failure with preserved ejection fraction.</p>
-                            <p><strong>判斷條件 :</strong> LVEF>50% 且以下條件滿足三項以上</p>
-                            <ul id="ddCondition">
-                                <li><strong>LAE_40: </strong>左心室直徑>=40mm</li>
-                                <li><strong>PH_above_35: </strong>右心室收縮壓>=35mmHg</li>
-                                <li><strong>MedEa_below_7: </strong>二尖瓣環內側組織的舒張速度<=7cm/s</li>
-                                <li><strong>high_LVEDP: </strong>左心室舒張終末壓>=15mmHg</li>
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    
-                </div>
-
-                <div>
-
-                </div>
             </div>
 
             
@@ -307,6 +308,7 @@
         var g_infos = {};
         var g_pid = '5147137';
         var g_date = '';
+        const ipAddress = '140.113.213.56';
 
         // "2014-11-19": {
         //     "model_pred": "HFrEF",
@@ -317,19 +319,25 @@
 
         function displayJsonAsHtml(jsonData) {
             console.log('displayJsonAsHtml');
-            var lessThanZero = 'Less than 0.01'
+            var lessThanZero = '小於 1'
             document.getElementById('patientId').textContent = 'Patient ID: ' + g_pid;
             document.getElementById('ekgDate').textContent = 'EKG Date: ' + g_date;
             document.getElementById('model_pred').textContent = 'Model Prediction: ' + jsonData.model_pred;
-            var sd_prob = jsonData.prob_sd.toString();
-            var dd_prob = jsonData.prob_dd.toString();
-            var normal_prob = jsonData.prob_normal.toString();
-            if (sd_prob == '0') sd_prob = lessThanZero;
-            if (dd_prob == '0') dd_prob = lessThanZero;
-            if (normal_prob == '0') normal_prob = lessThanZero;
-            document.getElementById('model_prob').children[0].textContent = 'HFrEF: ' + sd_prob;
-            document.getElementById('model_prob').children[1].textContent = 'HFpEF: ' + dd_prob;
-            document.getElementById('model_prob').children[2].textContent = 'Normal: ' + normal_prob;        
+            var sd_prob = Math.floor(jsonData.prob_sd*100);
+            var dd_prob = Math.floor(jsonData.prob_dd*100);
+            var normal_prob = Math.floor(jsonData.prob_normal*100);
+            var sd_prob_str = sd_prob.toString();
+            var dd_prob_str = dd_prob.toString();
+            var normal_prob_str = normal_prob.toString();
+            console.log(jsonData.prob_sd);
+            console.log(jsonData.prob_dd);
+            console.log(jsonData.prob_normal);
+            if (sd_prob == 0) sd_prob_str = lessThanZero;
+            if (dd_prob == 0) dd_prob_str = lessThanZero;
+            if (normal_prob == 0) normal_prob_str = lessThanZero;
+            document.getElementById('model_prob').children[0].textContent = 'HFrEF: ' + sd_prob_str + ' %';
+            document.getElementById('model_prob').children[1].textContent = 'HFpEF: ' + dd_prob_str + ' %';
+            document.getElementById('model_prob').children[2].textContent = 'Normal: ' + normal_prob_str + ' %';        
         }
         
         function addNewDate(date) {
@@ -435,7 +443,7 @@
             console.log(doctor_diago);
 
             // call api to submit
-            const url = `http://140.113.213.56:8000/twoDiagnos/doctor/label?id=${patient_id}&date=${ekg_date}&diagnosis=${doctor_diago}`;
+            const url = `http://${ipAddress}:8000/twoDiagnos/doctor/label?id=${patient_id}&date=${ekg_date}&diagnosis=${doctor_diago}`;
 
             try {
                 const response = await fetch(url);
@@ -498,11 +506,11 @@
 
             g_pid = inputValue;
             console.log('Search patient id: ', inputValue);
-            initial_date(g_pid)
+            initial_date(g_pid);
         }
 
         function initial_date(pid) {
-            const url = `http://140.113.213.56:8000/oneDiagnos/patient/model/preds?pid=${pid}`;
+            const url = `http://${ipAddress}:8000/oneDiagnos/patient/model/preds?pid=${pid}`;
             
             fetch(url)
             .then(response => response.json())
@@ -531,6 +539,18 @@
             });
         }
 
+        function set_ip_address() {
+            const linkElement_tvgh = document.getElementById('navbar_TVGH_AI_EKG');
+            const linkElement_home = document.getElementById('navbar_Home');
+            const linkElement_drag = document.getElementById('navbar_Drag');
+
+            // Set the href attribute of the link using the variable
+            linkElement_tvgh.href = `http://${ipAddress}:32080/PatientsInfo.html`;
+            linkElement_home.href = `http://${ipAddress}:32080/PatientsInfo.html`;
+            linkElement_drag.href = `http://${ipAddress}:32080/tvghTwoDiagnos.html`;
+        }
+        
+        set_ip_address();
         // initial_date(g_pid);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
