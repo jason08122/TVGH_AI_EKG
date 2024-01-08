@@ -25,7 +25,7 @@ sudo docker-compose up -d
 ```
 
 ### 開啟網頁
-    - http://10.97.242.20:6060/PatientsInfo.html
+    - http://10.97.242.20:32080/PatientsInfo.html
 
 ---
 <br>
