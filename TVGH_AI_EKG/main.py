@@ -215,8 +215,13 @@ def GetOneDiagnosByPid(pid: str = '-1'):
         sd_res = res['sd_model_pred'].values[0], res['sd_model_prob_sd'].values[0], res['sd_model_prob_others'].values[0]
         
         sd_prob = sd_res[1]
-        dd_prob = 0.0 if sddd_res[2] == 0.0 else sd_res[2] * sddd_res[2] / (sddd_res[2]+sddd_res[3])
-        normal_prob = 0.0 if sddd_res[3] == 0.0 else sd_res[2] * sddd_res[3] / (sddd_res[2]+sddd_res[3])
+        if sddd_res[2] == 0.0 and sddd_res[3] == 0.0:
+            dd_prob = sd_res[2] / 2
+            normal_prob = sd_res[2] / 2
+        else:
+            dd_prob = 0.0 if sddd_res[2] == 0.0 else sd_res[2] * sddd_res[2] / (sddd_res[2]+sddd_res[3])
+            normal_prob = 0.0 if sddd_res[3] == 0.0 else sd_res[2] * sddd_res[3] / (sddd_res[2]+sddd_res[3])
+        
         dd_prob = int(dd_prob*100)/100.0  
         normal_prob = int(normal_prob*100)/100.0        
         
